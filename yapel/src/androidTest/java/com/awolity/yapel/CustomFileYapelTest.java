@@ -30,10 +30,11 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings("unused")
 @RunWith(AndroidJUnit4.class)
-public class EncryptedPrefKeyYapelTest {
+public class CustomFileYapelTest {
 
-    private Yapel yapel;
+    private Yapel customFileYapel;
     private static final String STRING_KEY = "string key";
     private static final String STRING_SET_KEY = "stringset key";
     private static final String INT_KEY = "int key";
@@ -44,53 +45,53 @@ public class EncryptedPrefKeyYapelTest {
     @Before
     public void setup() throws Exception {
         Context instrumentationCtx = InstrumentationRegistry.getContext();
-        yapel = new EncryptedPrefKeyYapel("my_key_alias", instrumentationCtx);
+        customFileYapel = new Yapel("my_key_alias2", instrumentationCtx, "my_preference_file");
     }
 
     @Test
     public void stringTest() throws Exception {
         String str = "whatever";
-        yapel.setString(STRING_KEY, str);
-        String result = yapel.getString(STRING_KEY, null);
+        customFileYapel.setString(STRING_KEY, str);
+        String result = customFileYapel.getString(STRING_KEY, null);
         assertTrue(str.equals(result));
     }
 
     @Test
     public void intTest() throws Exception {
         int value = 12345;
-        yapel.setInt(INT_KEY, value);
-        int result = yapel.getInt(INT_KEY,0);
+        customFileYapel.setInt(INT_KEY, value);
+        int result = customFileYapel.getInt(INT_KEY, 0);
         assertEquals(value, result);
     }
 
     @Test
-    public void booleanTest() throws Exception{
-        yapel.setBoolean(BOOLEAN_KEY,true);
-        boolean result = yapel.getBoolean(BOOLEAN_KEY,false);
+    public void booleanTest() throws Exception {
+        customFileYapel.setBoolean(BOOLEAN_KEY, true);
+        boolean result = customFileYapel.getBoolean(BOOLEAN_KEY, false);
         assertEquals(true, result);
     }
 
     @Test
-    public void booleanTest2() throws Exception{
-        yapel.setBoolean(BOOLEAN_KEY,false);
-        boolean result = yapel.getBoolean(BOOLEAN_KEY,true);
+    public void booleanTest2() throws Exception {
+        customFileYapel.setBoolean(BOOLEAN_KEY, false);
+        boolean result = customFileYapel.getBoolean(BOOLEAN_KEY, true);
         assertEquals(false, result);
     }
 
     @Test
     public void longTest() throws Exception {
         long value = 12345678;
-        yapel.setLong(LONG_KEY, value);
-        long result = yapel.getLong(LONG_KEY,0);
+        customFileYapel.setLong(LONG_KEY, value);
+        long result = customFileYapel.getLong(LONG_KEY, 0);
         assertEquals(value, result);
     }
 
     @Test
     public void floatTest() throws Exception {
         float value = 1234.5678F;
-        yapel.setFloat(FLOAT_KEY, value);
-        float result = yapel.getFloat(FLOAT_KEY,0F);
-        assertEquals(value, result,0.00001F);
+        customFileYapel.setFloat(FLOAT_KEY, value);
+        float result = customFileYapel.getFloat(FLOAT_KEY, 0F);
+        assertEquals(value, result, 0.00001F);
     }
 
     @Test
@@ -99,8 +100,8 @@ public class EncryptedPrefKeyYapelTest {
         value.add("sálálálá");
         value.add("Subidubi");
         value.add("\\Ä€Í;>*$Ł");
-        yapel.setStringSet(STRING_SET_KEY, value);
-        Set<String> result = yapel.getStringSet(STRING_SET_KEY, null);
+        customFileYapel.setStringSet(STRING_SET_KEY, value);
+        Set<String> result = customFileYapel.getStringSet(STRING_SET_KEY, null);
         assertTrue(value.equals(result));
     }
 

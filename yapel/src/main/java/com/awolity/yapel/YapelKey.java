@@ -32,11 +32,11 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 
-public class YapelKey {
+class YapelKey {
 
     private static final String ANDROID_KEYSTORE_PROVIDER = "AndroidKeyStore";
     private static final int AES_KEY_LENGTH_IN_BITS = 256;
-    private String mAlias;
+    private final String mAlias;
 
     public YapelKey(String alias) throws YapelKeyException {
         mAlias = alias;
@@ -45,6 +45,7 @@ public class YapelKey {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void createKey() throws YapelKeyException {
         KeyStore keyStore;
 
@@ -81,8 +82,7 @@ public class YapelKey {
         }
     }
 
-    public boolean deleteKey() throws YapelKeyException {
-        boolean result = false;
+    public void deleteKey() throws YapelKeyException {
         KeyStore keyStore;
 
         try {
@@ -90,12 +90,10 @@ public class YapelKey {
 
             if (keyStore.containsAlias(mAlias)) {
                 keyStore.deleteEntry(mAlias);
-                result = true;
             }
         } catch (KeyStoreException e) {
             throw new YapelKeyException(e);
         }
-        return result;
     }
 
     public boolean hasKey() throws YapelKeyException {

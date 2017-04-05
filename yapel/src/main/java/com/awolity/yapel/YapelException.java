@@ -16,6 +16,7 @@
 
 package com.awolity.yapel;
 
+@SuppressWarnings("WeakerAccess")
 public class YapelException extends Exception {
     YapelException(Throwable cause) {
         super(cause);

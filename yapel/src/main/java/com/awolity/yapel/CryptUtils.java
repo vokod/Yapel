@@ -31,7 +31,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 
-public class CryptUtils {
+class CryptUtils {
 
     private CryptUtils() {
     }

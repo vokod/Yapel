@@ -1,1 +1,1 @@
-include ':app', ':yapel'
+include ':yapel'

@@ -19,20 +19,19 @@ package com.awolity.yapel;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
-import java.util.Map;
 import java.util.Set;
 
 import javax.crypto.SecretKey;
 
-public abstract class Yapel {
+@SuppressWarnings({"WeakerAccess", "unused"})
+public class Yapel {
 
-    YapelKey mYapelKey;
-    SharedPreferences mSp;
-    SecretKey mKey;
+    private YapelKey mYapelKey;
+    private SharedPreferences mSp;
+    private SecretKey mKey;
 
-     Yapel(String keyAlias, Context context) throws YapelException {
+     public Yapel(String keyAlias, Context context) throws YapelException {
         try {
             mYapelKey = new YapelKey(keyAlias);
             mKey = mYapelKey.getKey();
@@ -42,7 +41,7 @@ public abstract class Yapel {
         mSp = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-     Yapel(String keyAlias, Context context, String prefFileName) throws YapelException {
+    public Yapel(String keyAlias, Context context, String prefFileName) throws YapelException {
         try {
             mYapelKey = new YapelKey(keyAlias);
             mKey = mYapelKey.getKey();
@@ -52,52 +51,108 @@ public abstract class Yapel {
         mSp = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE);
     }
 
-    abstract String getString(String prefKey, String defaultValue) throws YapelException;
+    public String getString(String prefKey, @SuppressWarnings("SameParameterValue") String defaultValue) throws YapelException {
+        String encryptedPrefVal = readString(prefKey);
+        if (encryptedPrefVal == null) {
+            return defaultValue;
+        } else {
+            return CryptUtils.decryptString(encryptedPrefVal, mKey);
+        }
+    }
 
-    abstract void setString(String prefKey, String prefVal) throws YapelException;
+    public void setString(String prefKey, String prefVal) throws YapelException {
+        String encryptedPrefVal = CryptUtils.encryptString(prefVal, mKey);
+        writeString(prefKey, encryptedPrefVal);
+    }
 
-    abstract boolean getBoolean(String prefKey, boolean defaultValue) throws YapelException;
+    public boolean getBoolean(String prefKey, boolean defaultValue) throws YapelException {
+        String encryptedBooleanValue = readString(prefKey);
+        if (encryptedBooleanValue == null) {
+            return defaultValue;
+        } else {
+            return CryptUtils.decryptBoolean(encryptedBooleanValue, mKey);
+        }
+    }
 
-    abstract void setBoolean(String prefKey, boolean prefVal) throws YapelException;
+    public void setBoolean(String prefKey, boolean prefVal) throws YapelException {
+        String encryptedPrefVal = CryptUtils.encryptBoolean(prefVal, mKey);
+        writeString(prefKey, encryptedPrefVal);
+    }
 
-    abstract float getFloat(String prefKey, float defaultValue) throws YapelException;
+    public float getFloat(String prefKey, @SuppressWarnings("SameParameterValue") float defaultValue) throws YapelException {
+        String encryptedFloatValueAsString = readString(prefKey);
+        if (encryptedFloatValueAsString == null) {
+            return defaultValue;
+        } else {
+            return CryptUtils.decryptFloat(encryptedFloatValueAsString, mKey);
+        }
+    }
 
-    abstract void setFloat(String prefKey, float prefVal) throws YapelException;
+    public void setFloat(String prefKey, float prefVal) throws YapelException {
+        String encryptedPrefVal = CryptUtils.encryptFloat(prefVal, mKey);
+        writeString(prefKey, encryptedPrefVal);
+    }
 
-    abstract long getLong(String prefKey, long defaultValue) throws YapelException;
+    public long getLong(String prefKey, @SuppressWarnings("SameParameterValue") long defaultValue) throws YapelException {
+        String longAsString = readString(prefKey);
+        if (longAsString == null) {
+            return defaultValue;
+        } else {
+            return CryptUtils.decryptLong(longAsString, mKey);
+        }
+    }
 
-    abstract void setLong(String prefKey, long prefVal) throws YapelException;
+    public void setLong(String prefKey, long prefVal) throws YapelException {
+        String encryptedPrefVal = CryptUtils.encryptLong(prefVal, mKey);
+        writeString(prefKey, encryptedPrefVal);
+    }
 
-    abstract int getInt(String prefKey, int defaultValue) throws YapelException;
+    public int getInt(String prefKey, @SuppressWarnings("SameParameterValue") int defaultValue) throws YapelException {
+        String intAsString = readString(prefKey);
+        if (intAsString == null) {
+            return defaultValue;
+        } else {
+            return CryptUtils.decryptInt(intAsString, mKey);
+        }
+    }
 
-    abstract void setInt(String prefKey, int prefVal) throws YapelException;
+    public void setInt(String prefKey, int prefVal) throws YapelException {
+        String encryptedPrefVal = CryptUtils.encryptInt(prefVal, mKey);
+        writeString(prefKey, encryptedPrefVal);
+    }
 
-    abstract void setStringSet(String prefKey, Set<String> prefVal) throws YapelException;
+    public void setStringSet(String prefKey, Set<String> prefVal) throws YapelException {
+        Set<String> encryptedPrefVal = CryptUtils.encryptStringSet(prefVal, mKey);
+        writeStringSet(prefKey, encryptedPrefVal);
+    }
 
-    abstract Set<String> getStringSet(String prefKey, Set<String> defaultValue) throws YapelException;
+    public Set<String> getStringSet(String prefKey, @SuppressWarnings("SameParameterValue") Set<String> defaultValue) throws YapelException {
+        Set<String> encryptedPrefVal = readStringSet(prefKey);
+        if (encryptedPrefVal == null) {
+            return defaultValue;
+        } else {
+            return CryptUtils.decryptStringSet(encryptedPrefVal, mKey);
+        }
+    }
 
-    void writeString(String prefKey, String prefVal) {
+    private void writeString(String prefKey, String prefVal) {
         SharedPreferences.Editor editor = mSp.edit();
         editor.putString(prefKey, prefVal);
         editor.apply();
     }
 
-    String readString(String prefKey) {
+    private String readString(String prefKey) {
         return mSp.getString(prefKey, null);
     }
 
-    void writeStringSet(String prefKey, Set<String> prefVals) {
+    private void writeStringSet(String prefKey, Set<String> prefVals) {
         SharedPreferences.Editor editor = mSp.edit();
         editor.putStringSet(prefKey, prefVals);
         editor.apply();
     }
 
-    Set<String> readStringSet(String prefKey) {
+    private Set<String> readStringSet(String prefKey) {
         return mSp.getStringSet(prefKey, null);
-    }
-
-    Map<String, ?> getAll() {
-        return mSp.getAll();
     }
 
 }

@@ -30,8 +30,9 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings("unused")
 @RunWith(AndroidJUnit4.class)
-public class PlainPrefKeyYapelTest {
+public class DefaultFileYapelTest {
 
     private Yapel yapel;
     private static final String STRING_KEY = "string key";
@@ -44,7 +45,7 @@ public class PlainPrefKeyYapelTest {
     @Before
     public void setup() throws Exception {
         Context instrumentationCtx = InstrumentationRegistry.getContext();
-        yapel = new PlainPrefKeyYapel("my_key_alias", instrumentationCtx);
+        yapel = new Yapel("my_key_alias", instrumentationCtx);
 
     }
 

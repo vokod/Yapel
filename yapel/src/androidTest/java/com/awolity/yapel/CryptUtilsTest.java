@@ -29,6 +29,7 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings("unused")
 @RunWith(AndroidJUnit4.class)
 public class CryptUtilsTest {
 
@@ -62,7 +63,7 @@ public class CryptUtilsTest {
         mKey = new YapelKey("whatever2");
 
         try {
-            String decryptedString = CryptUtils.decryptString(encryptedString, mKey.getKey());
+            @SuppressWarnings("UnusedAssignment") String decryptedString = CryptUtils.decryptString(encryptedString, mKey.getKey());
         } catch (YapelException e) {
             assertTrue("javax.crypto.AEADBadTagException".equals(e.getMessage()));
         }
@@ -90,6 +91,7 @@ public class CryptUtilsTest {
         String encryptedFloat = CryptUtils.encryptFloat(value, mKey.getKey());
         float decryptedFloat = CryptUtils.decryptFloat(encryptedFloat, mKey.getKey());
 
+        //noinspection RedundantCast,RedundantCast
         assertEquals((float)value, (float)decryptedFloat,0.0001F);
     }
 

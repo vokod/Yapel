@@ -27,6 +27,7 @@ import org.junit.runner.RunWith;
 import java.util.HashSet;
 import java.util.Set;
 
+import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -46,7 +47,41 @@ public class DefaultFileYapelTest {
     public void setup() throws Exception {
         Context instrumentationCtx = InstrumentationRegistry.getContext();
         yapel = new Yapel("my_key_alias", instrumentationCtx);
+        yapel.clear();
 
+    }
+
+    @Test
+    public void containsTest() throws Exception {
+        String str = "whatever";
+        yapel.setString(STRING_KEY, str);
+        boolean result = yapel.contains(STRING_KEY);
+        assertTrue(result);
+    }
+
+    @Test
+    public void containsTest2() throws Exception {
+        String str = "whatever";
+        boolean result = yapel.contains(STRING_KEY);
+        assertFalse(result);
+    }
+
+    @Test
+    public void clearTest() throws Exception {
+        String str = "whatever";
+        yapel.setString(STRING_KEY, str);
+        yapel.clear();
+        boolean result = yapel.contains(STRING_KEY);
+        assertFalse(result);
+    }
+
+    @Test
+    public void removeTest() throws Exception {
+        String str = "whatever";
+        yapel.setString(STRING_KEY, str);
+        yapel.remove(STRING_KEY);
+        boolean result = yapel.contains(STRING_KEY);
+        assertFalse(result);
     }
 
     @Test

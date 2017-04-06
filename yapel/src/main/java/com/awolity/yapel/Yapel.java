@@ -51,6 +51,18 @@ public class Yapel {
         mSp = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE);
     }
 
+    public void clear (){
+        mSp.edit().clear().apply();
+    }
+
+    public boolean contains (String key){
+        return mSp.contains(key);
+    }
+
+    public void remove (String key){
+        mSp.edit().remove(key).apply();
+    }
+
     public String getString(String prefKey, @SuppressWarnings("SameParameterValue") String defaultValue) throws YapelException {
         String encryptedPrefVal = readString(prefKey);
         if (encryptedPrefVal == null) {

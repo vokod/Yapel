@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/yapel/yapel.iml" filepath="$PROJECT_DIR$/yapel/yapel.iml" />
       <module fileurl="file://$PROJECT_DIR$/yapel-lib.iml" filepath="$PROJECT_DIR$/yapel-lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/yapel2/yapel2.iml" filepath="$PROJECT_DIR$/yapel2/yapel2.iml" />
     </modules>
   </component>
 </project>

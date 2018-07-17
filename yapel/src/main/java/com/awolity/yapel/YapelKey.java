@@ -31,15 +31,15 @@ import java.security.cert.CertificateException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
-
 class YapelKey {
 
     private static final String ANDROID_KEYSTORE_PROVIDER = "AndroidKeyStore";
     private static final int AES_KEY_LENGTH_IN_BITS = 256;
-    private final String mAlias;
+    private final String alias;
 
+    @SuppressWarnings("WeakerAccess")
     public YapelKey(String alias) throws YapelKeyException {
-        mAlias = alias;
+        this.alias = alias;
         if (!hasKey()){
             createKey();
         }
@@ -52,13 +52,13 @@ class YapelKey {
         try {
             keyStore = initKeyStore();
 
-            if (!keyStore.containsAlias(mAlias)) {
+            if (!keyStore.containsAlias(alias)) {
 
                 KeyGenerator generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES,
                         ANDROID_KEYSTORE_PROVIDER);
 
                 KeyGenParameterSpec.Builder builder = new KeyGenParameterSpec.Builder(
-                        mAlias,
+                        alias,
                         KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT);
 
                 builder.setKeySize(AES_KEY_LENGTH_IN_BITS)
@@ -76,7 +76,7 @@ class YapelKey {
     public SecretKey getKey() throws YapelKeyException {
         KeyStore keyStore = initKeyStore();
         try {
-            return (SecretKey) keyStore.getKey(mAlias, null);
+            return (SecretKey) keyStore.getKey(alias, null);
         } catch (KeyStoreException | NoSuchAlgorithmException | UnrecoverableKeyException e) {
             throw new YapelKeyException(e);
         }
@@ -88,8 +88,8 @@ class YapelKey {
         try {
             keyStore = initKeyStore();
 
-            if (keyStore.containsAlias(mAlias)) {
-                keyStore.deleteEntry(mAlias);
+            if (keyStore.containsAlias(alias)) {
+                keyStore.deleteEntry(alias);
             }
         } catch (KeyStoreException e) {
             throw new YapelKeyException(e);
@@ -101,7 +101,7 @@ class YapelKey {
 
         KeyStore keyStore = initKeyStore();
         try {
-            if (keyStore.containsAlias(mAlias)) {
+            if (keyStore.containsAlias(alias)) {
                 result = true;
             }
         } catch (KeyStoreException e) {

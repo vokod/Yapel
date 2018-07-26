@@ -28,24 +28,24 @@ import static org.junit.Assert.assertTrue;
 
 public class CryptUtilsTest {
 
-    private YapelKey mKey;
+    private YapelKey yapelKey;
 
     @Before
     public void initKey()  throws Exception{
-        mKey = new YapelKey("whatever");
+        yapelKey = new YapelKey("whatever");
     }
 
     @After
     public void deleteKey()  throws Exception{
-        mKey.deleteKey();
+        yapelKey.deleteKey();
     }
 
     @Test
     public void encryptString_decryptString() throws Exception {
 
         String plainString = "whatever1234";
-        String encryptedString = CryptUtils.encryptString(plainString, mKey.getKey());
-        String decryptedString = CryptUtils.decryptString(encryptedString, mKey.getKey());
+        String encryptedString = CryptUtils.encryptString(plainString, yapelKey.getKey());
+        String decryptedString = CryptUtils.decryptString(encryptedString, yapelKey.getKey());
 
         assertTrue(plainString.equals(decryptedString));
     }
@@ -53,12 +53,12 @@ public class CryptUtilsTest {
     @Test
     public void encryptString_decryptString2() throws Exception {
         String plainString = "whatever1234";
-        String encryptedString = CryptUtils.encryptString(plainString, mKey.getKey());
+        String encryptedString = CryptUtils.encryptString(plainString, yapelKey.getKey());
 
-        mKey = new YapelKey("whatever2");
+        yapelKey = new YapelKey("whatever2");
 
         try {
-            @SuppressWarnings("UnusedAssignment") String decryptedString = CryptUtils.decryptString(encryptedString, mKey.getKey());
+            @SuppressWarnings("UnusedAssignment") String decryptedString = CryptUtils.decryptString(encryptedString, yapelKey.getKey());
         } catch (YapelException e) {
             assertTrue("javax.crypto.AEADBadTagException".equals(e.getMessage()));
         }
@@ -66,16 +66,16 @@ public class CryptUtilsTest {
 
     @Test
     public void encryptBoolean_decryptBoolean() throws Exception {
-        String encryptedBoolean = CryptUtils.encryptBoolean(true, mKey.getKey());
-        boolean decryptedBoolean = CryptUtils.decryptBoolean(encryptedBoolean, mKey.getKey());
+        String encryptedBoolean = CryptUtils.encryptBoolean(true, yapelKey.getKey());
+        boolean decryptedBoolean = CryptUtils.decryptBoolean(encryptedBoolean, yapelKey.getKey());
 
         assertEquals(true, decryptedBoolean);
     }
 
     @Test
     public void encryptBoolean_decryptBoolean2() throws Exception {
-        String encryptedBoolean = CryptUtils.encryptBoolean(false, mKey.getKey());
-        boolean decryptedBoolean = CryptUtils.decryptBoolean(encryptedBoolean, mKey.getKey());
+        String encryptedBoolean = CryptUtils.encryptBoolean(false, yapelKey.getKey());
+        boolean decryptedBoolean = CryptUtils.decryptBoolean(encryptedBoolean, yapelKey.getKey());
 
         assertEquals(false, decryptedBoolean);
     }
@@ -83,8 +83,8 @@ public class CryptUtilsTest {
     @Test
     public void encryptFloat_decryptFloat() throws Exception {
         float value = (float) 6.836542E-8;
-        String encryptedFloat = CryptUtils.encryptFloat(value, mKey.getKey());
-        float decryptedFloat = CryptUtils.decryptFloat(encryptedFloat, mKey.getKey());
+        String encryptedFloat = CryptUtils.encryptFloat(value, yapelKey.getKey());
+        float decryptedFloat = CryptUtils.decryptFloat(encryptedFloat, yapelKey.getKey());
 
         //noinspection RedundantCast,RedundantCast
         assertEquals((float)value, (float)decryptedFloat,0.0001F);
@@ -93,8 +93,8 @@ public class CryptUtilsTest {
     @Test
     public void encryptLong_decryptLong() throws Exception {
         long value = 654987321;
-        String encryptedLong = CryptUtils.encryptLong(value, mKey.getKey());
-        float decryptedLong = CryptUtils.decryptLong(encryptedLong, mKey.getKey());
+        String encryptedLong = CryptUtils.encryptLong(value, yapelKey.getKey());
+        float decryptedLong = CryptUtils.decryptLong(encryptedLong, yapelKey.getKey());
 
         assertEquals(value, decryptedLong,1);
     }
@@ -102,8 +102,8 @@ public class CryptUtilsTest {
     @Test
     public void encryptInt_decryptInt() throws Exception {
         int value = 654987;
-        String encryptedInt = CryptUtils.encryptInt(value, mKey.getKey());
-        float decryptedInt = CryptUtils.decryptInt(encryptedInt, mKey.getKey());
+        String encryptedInt = CryptUtils.encryptInt(value, yapelKey.getKey());
+        float decryptedInt = CryptUtils.decryptInt(encryptedInt, yapelKey.getKey());
 
         assertEquals(value, decryptedInt,1);
     }
@@ -114,8 +114,8 @@ public class CryptUtilsTest {
         value.add("subidubi");
         value.add("sálálálá");
         value.add("whatever");
-        Set<String> encryptedStringSet = CryptUtils.encryptStringSet(value,mKey.getKey());
-        Set<String> decryptedStringSet = CryptUtils.decryptStringSet(encryptedStringSet,mKey.getKey());
+        Set<String> encryptedStringSet = CryptUtils.encryptStringSet(value, yapelKey.getKey());
+        Set<String> decryptedStringSet = CryptUtils.decryptStringSet(encryptedStringSet, yapelKey.getKey());
 
         assertTrue(value.equals(decryptedStringSet));
     }

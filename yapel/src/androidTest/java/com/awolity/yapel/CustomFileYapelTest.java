@@ -30,7 +30,6 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@SuppressWarnings("unused")
 @RunWith(AndroidJUnit4.class)
 public class CustomFileYapelTest {
 

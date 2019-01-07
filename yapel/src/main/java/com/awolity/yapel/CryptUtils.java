@@ -38,6 +38,7 @@ class CryptUtils {
 
     private static final int IV_LENGTH_IN_BYTES = 12; // GCM mode cipher only accepts 12 byte IV
     private static final int GCM_AUTH_TAG_LENGTH_IN_BITS = 128;
+    public static final String AAD = "Insignificant";
     private static final String AES_GCM_NOPADDING = "AES/GCM/NoPadding";
     private static final String TRUE = "TRUE";
     private static final String FALSE = "FALSE";
@@ -124,14 +125,17 @@ class CryptUtils {
 
     static private byte[] encryptByteArray(byte[] plainArray, SecretKey key) throws YapelException {
         byte[] result;
+        byte[] aad = AAD.getBytes();
 
         Cipher cipher;
         try {
             cipher = Cipher.getInstance(AES_GCM_NOPADDING);
             cipher.init(Cipher.ENCRYPT_MODE, key);
+            cipher.updateAAD(aad);
             byte[] iv = cipher.getIV();
             byte[] encryptedBytes = cipher.doFinal(plainArray);
             result = concatenateByteArrays(iv, encryptedBytes);
+
 
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
             throw new YapelException(e);
@@ -145,6 +149,7 @@ class CryptUtils {
         byte[] plainArray;
         byte[] iv = new byte[IV_LENGTH_IN_BYTES];
         byte[] encryptedBytes = new byte[encryptedArray.length - IV_LENGTH_IN_BYTES];
+        byte[] aad = AAD.getBytes();
 
         System.arraycopy(encryptedArray, 0, iv, 0, IV_LENGTH_IN_BYTES);
         System.arraycopy(encryptedArray, IV_LENGTH_IN_BYTES, encryptedBytes, 0, encryptedBytes.length);
@@ -154,6 +159,7 @@ class CryptUtils {
             GCMParameterSpec gcmParameterSpec = new GCMParameterSpec(GCM_AUTH_TAG_LENGTH_IN_BITS, iv);
             cipher = Cipher.getInstance(AES_GCM_NOPADDING);
             cipher.init(Cipher.DECRYPT_MODE, key, gcmParameterSpec);
+            cipher.updateAAD(aad);
             plainArray = cipher.doFinal(encryptedBytes);
 
         } catch (IllegalBlockSizeException
@@ -177,6 +183,4 @@ class CryptUtils {
         result = result.replace("\r", "");
         return result;
     }
-
-
 }

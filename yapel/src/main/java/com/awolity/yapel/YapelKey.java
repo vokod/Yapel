@@ -40,7 +40,7 @@ class YapelKey {
     @SuppressWarnings("WeakerAccess")
     public YapelKey(String alias) throws YapelKeyException {
         this.alias = alias;
-        if (!hasKey()){
+        if (!hasKey()) {
             createKey();
         }
     }
@@ -59,11 +59,11 @@ class YapelKey {
 
                 KeyGenParameterSpec.Builder builder = new KeyGenParameterSpec.Builder(
                         alias,
-                        KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT);
-
-                builder.setKeySize(AES_KEY_LENGTH_IN_BITS)
+                        KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                        .setKeySize(AES_KEY_LENGTH_IN_BITS)
                         .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE);
+                        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                        .setUserAuthenticationRequired(false);
 
                 generator.init(builder.build());
                 generator.generateKey();

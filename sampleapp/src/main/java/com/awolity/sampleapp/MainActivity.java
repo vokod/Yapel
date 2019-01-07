@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
         try {
             Yapel yapel = new Yapel(key_alias, this.getApplicationContext());
             String readString = yapel.getString(label1, "no string");
-            Log.d(TAG, "string: "+ readString);
+            Log.d(TAG, "string: " + readString);
             long readLong = yapel.getLong(label2, 0);
-            Log.d(TAG, "long: "+ readLong);
+            Log.d(TAG, "long: " + readLong);
         } catch (YapelException e) {
             e.printStackTrace();
         }

@@ -47,7 +47,7 @@ public class CryptUtilsTest {
         String encryptedString = CryptUtils.encryptString(plainString, yapelKey.getKey());
         String decryptedString = CryptUtils.decryptString(encryptedString, yapelKey.getKey());
 
-        assertTrue(plainString.equals(decryptedString));
+        assertEquals(plainString, decryptedString);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class CryptUtilsTest {
         try {
             @SuppressWarnings("UnusedAssignment") String decryptedString = CryptUtils.decryptString(encryptedString, yapelKey.getKey());
         } catch (YapelException e) {
-            assertTrue("javax.crypto.AEADBadTagException".equals(e.getMessage()));
+            assertEquals("javax.crypto.AEADBadTagException", e.getMessage());
         }
     }
 

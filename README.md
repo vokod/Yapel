@@ -1,10 +1,31 @@
 # yapel
-**Y**et **A**nother **P**reference **E**ncryption **L**ibrary (for Android)
+**Y**et **A**nother Shared **P**reference **E**ncryption **L**ibrary (for Android)
 
-Yapel encrypts your Android shared preferences values. In later versions it will encrypt shared preferences labels as well.
-If you access your SP via Yapel, all the values will be encrypted with AES256 in GCM mode with a key that is generated with and is stored in the Android keystore. Key material cannot be extracted from the keystore and only the app that created it, can access the key.
+[![](https://jitpack.io/v/vokod/yapel.svg)](https://jitpack.io/#vokod/yapel)
 
+Yapel encrypts your Android shared preferences values.
+If you access shared preferences via Yapel, all the values will be encrypted with AES256 in GCM mode with a key that is generated with and is stored in the Android keystore. Key material cannot be extracted from the keystore and only the app that created it, can access the key.
 
+The benefits: pentesters and hackers won't be able to read and manipulate the preferences of your app on a rooted device. You can store security sensitive information in shared preferences.
+
+## Dependency
+
+Add this in your root `build.gradle` file (**not** your module `build.gradle` file):
+
+```gradle
+allprojects {
+	repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+Then, add the library to your module `build.gradle`
+```gradle
+dependencies {
+    com.github.vokod:yapel:rc1'
+}
+```
 
 ### Usage
 

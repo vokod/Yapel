@@ -8,6 +8,11 @@ If you access shared preferences via Yapel, all the values will be encrypted wit
 
 The benefits: pentesters and hackers won't be able to read and manipulate the preferences of your app on a rooted device. You can store security sensitive information in shared preferences.
 
+## Features
+- AES256 GCM encryption
+- No need to set password
+- Encryption key is stored in the Android Keystore. Key material never leaves the keystore, key cannot be extracted.
+
 ## Dependency
 
 Add this in your root `build.gradle` file (**not** your module `build.gradle` file):

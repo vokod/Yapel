@@ -28,7 +28,7 @@ allprojects {
 Then, add the library to your module `build.gradle`
 ```gradle
 dependencies {
-    com.github.vokod:yapel:rc1'
+    com.github.vokod:yapel:LATEST'
 }
 ```
 

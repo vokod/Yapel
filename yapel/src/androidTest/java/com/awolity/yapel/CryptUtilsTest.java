@@ -42,7 +42,6 @@ public class CryptUtilsTest {
 
     @Test
     public void encryptString_decryptString() throws Exception {
-
         String plainString = "whatever1234";
         String encryptedString = CryptUtils.encryptString(plainString, yapelKey.getKey());
         String decryptedString = CryptUtils.decryptString(encryptedString, yapelKey.getKey());

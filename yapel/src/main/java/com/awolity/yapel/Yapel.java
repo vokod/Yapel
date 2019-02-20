@@ -20,6 +20,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.crypto.SecretKey;
@@ -31,7 +33,33 @@ public class Yapel {
     private SharedPreferences sharedPreferences;
     private SecretKey secretKey;
 
-     public Yapel(String keyAlias, Context context) throws YapelException {
+    private static Map<String, Yapel> yapels;
+
+    public static Yapel get(String keyAlias, Context context) throws YapelException {
+        if (yapels == null) { // if no yapels were crearted
+            yapels = new HashMap<>(1);
+        }
+        if (yapels.containsKey(keyAlias)) { // if the yapel in question is in yapels
+            return yapels.get(keyAlias);
+        } else { // if the yapel in question is NOT in the yapels
+            yapels.put(keyAlias, new Yapel(keyAlias, context));
+            return yapels.get(keyAlias);
+        }
+    }
+
+    public static Yapel get(String keyAlias, Context context, String prefFileName) throws YapelException {
+        if (yapels == null) { // if no yapels were crearted
+            yapels = new HashMap<>(1);
+        }
+        if (yapels.containsKey(keyAlias + prefFileName)) { // if the yapel in question is in yapels
+            return yapels.get(keyAlias + prefFileName);
+        } else { // if the yapel in question is NOT in the yapels
+            yapels.put(keyAlias + prefFileName, new Yapel(keyAlias, context, prefFileName));
+            return yapels.get(keyAlias + prefFileName);
+        }
+    }
+
+    private Yapel(String keyAlias, Context context) throws YapelException {
         try {
             yapelKey = new YapelKey(keyAlias);
             secretKey = yapelKey.getKey();
@@ -41,7 +69,7 @@ public class Yapel {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public Yapel(String keyAlias, Context context, String prefFileName) throws YapelException {
+    private Yapel(String keyAlias, Context context, String prefFileName) throws YapelException {
         try {
             yapelKey = new YapelKey(keyAlias);
             secretKey = yapelKey.getKey();

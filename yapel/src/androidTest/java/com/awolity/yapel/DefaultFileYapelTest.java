@@ -46,9 +46,8 @@ public class DefaultFileYapelTest {
     @Before
     public void setup() throws Exception {
         Context instrumentationCtx = InstrumentationRegistry.getContext();
-        yapel = new Yapel("my_key_alias", instrumentationCtx);
+        yapel =  Yapel.get("my_key_alias", instrumentationCtx);
         yapel.clear();
-
     }
 
     @Test

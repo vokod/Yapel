@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+
 package com.awolity.yapel;
 
 import android.content.Context;
@@ -44,7 +45,7 @@ public class CustomFileYapelTest {
     @Before
     public void setup() throws Exception {
         Context instrumentationCtx = InstrumentationRegistry.getContext();
-        customFileYapel = new Yapel("my_key_alias2", instrumentationCtx, "my_preference_file");
+        customFileYapel = Yapel.get("my_key_alias2", instrumentationCtx, "my_preference_file");
     }
 
     @Test
@@ -105,3 +106,4 @@ public class CustomFileYapelTest {
     }
 
 }
+

@@ -1,7 +1,7 @@
 # yapel
 **Y**et **A**nother Shared **P**reference **E**ncryption **L**ibrary (for Android)
 
-[![](https://jitpack.io/v/vokod/yavel.svg)](https://jitpack.io/#vokod/yavel)
+[![](https://jitpack.io/v/vokod/yapel.svg)](https://jitpack.io/#vokod/yapel)
 
 Yapel encrypts your Android shared preferences values.
 If you access shared preferences via Yapel, all the values will be encrypted with AES256 in GCM mode with a key that is generated with and is stored in the Android keystore. Key material cannot be extracted from the keystore and only the app that created it, can access the key.

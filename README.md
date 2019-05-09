@@ -36,7 +36,7 @@ dependencies {
 
 ```
  try {
-  Yapel yapel = new Yapel("my_key_alias", this.getApplicationContext());
+  Yapel yapel = Yapel.get("my_key_alias", this.getApplicationContext());
             
   yapel.setString("label1", "some string");
   yapel.setLong("label2", 1234);

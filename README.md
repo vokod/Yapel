@@ -28,7 +28,7 @@ allprojects {
 Then, add the library to your module `build.gradle`
 ```gradle
 dependencies {
-    implementation com.github.vokod:yapel:0.1'
+    implementation com.github.vokod:yapel:0.2'
 }
 ```
 
@@ -36,7 +36,7 @@ dependencies {
 
 ```
  try {
-  Yapel yapel = new Yapel("my_key_alias", this.getApplicationContext());
+  Yapel yapel = Yapel.get("my_key_alias", this.getApplicationContext());
             
   yapel.setString("label1", "some string");
   yapel.setLong("label2", 1234);

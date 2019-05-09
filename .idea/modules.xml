@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AndroidProjects-yapel.iml" filepath="$PROJECT_DIR$/AndroidProjects-yapel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AndroidStudioProjects-yapel.iml" filepath="$PROJECT_DIR$/AndroidStudioProjects-yapel.iml" />
       <module fileurl="file://$PROJECT_DIR$/sampleapp/sampleapp.iml" filepath="$PROJECT_DIR$/sampleapp/sampleapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yapel/yapel-yapel.iml" filepath="$PROJECT_DIR$/yapel/yapel-yapel.iml" />
       <module fileurl="file://$PROJECT_DIR$/yapel/yapel-yapel.iml" filepath="$PROJECT_DIR$/yapel/yapel-yapel.iml" />
     </modules>
   </component>
